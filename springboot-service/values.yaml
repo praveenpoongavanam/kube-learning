@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: myrepo/myapp
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: "default"
+
+resources: {}
+
+auditServiceUrl: ""
+
+livenessProbe:
+  path: /actuaor/health
+  initialDelaySeconds: 20
+  periodSeconds: 10
+
+readinessProbe:
+  path: /actuator/health
+  initialDelaySeconds: 10
+  periodSeconds: 5

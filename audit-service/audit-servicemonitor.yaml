@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: audit-service-monitor
+  labels:
+    release: monitoring             # 👈 must match your Prometheus Helm release name
+spec:
+  selector:
+    matchLabels:
+      app: audit-service            # 👈 same label used in your Service
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s
+  namespaceSelector:
+    matchNames:
+      - default                     # 👈 or whatever namespace audit-service runs in
